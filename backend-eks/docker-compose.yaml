@@ -1,0 +1,25 @@
+version: '3'
+services:
+  frontend:
+    image: shehabfahmy/nti-final-project-frontend:latest
+    ports:
+      - "8181:80"
+    depends_on:
+      - backend
+    networks:
+      - front-tier
+      
+  backend:
+    image: shehabfahmy/nti-final-project-backend:eks
+    ports:
+      - "8282:3001"
+    environment:
+      - AWS_REGION=us-east-1
+      - DYNAMODB_TABLE=todos
+    networks:
+      - front-tier
+      - back-tier
+
+networks:
+  front-tier:
+  back-tier:
